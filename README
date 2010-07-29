@@ -1,0 +1,5 @@
+compass create quinnshanahan.com --using blueprint/semantic -x sass \
+--sass-dir src/stylesheets    \
+--css-dir site/stylesheets    \
+--images-dir site/images      \
+--javascripts-dir site/javascripts
