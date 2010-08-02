@@ -1,3 +1,4 @@
 site/*.html
 site/stylesheets/*
 .sass-cache
+Capfile
