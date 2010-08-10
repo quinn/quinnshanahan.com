@@ -3,6 +3,8 @@ jQuery.makeContainer = function makeContainer (name, url, renderer) {
   var template = container.find('.row-template');
 
   $.getJSON(url, function (data) {
+    container.find('.loading').hide();
+
     var i = 0;
     $.each(data, function () {
       var row = template.clone()
