@@ -7,6 +7,24 @@
   %li.resume=   link "Resume"
 
 #areas
+  .toggle-links(style='display: none')
+    Some updates from:
+    %a.github(href='#github') Github
+
   .github
+    %h2 Github Updates
+    .description
+      Visit my profile:
+      = link "Github", "http://github.com/quinn"
     .row-template(style='display: none')
-      %a(href='' target='blank')
+      %a.header(href='' target='blank')
+      %pre.description
+
+  .twitter
+    %h2 Twitter Updates
+    .description
+      Visit my profile:
+      = link "Twitter", "http://twitter.com/dontdie"
+    .row-template(style='display: none')
+      %blockquote.description
+      %a.permalink(href='' target='blank') Permalink
