@@ -50,6 +50,7 @@ jQuery(function ($) {
 
     case "PushEvent":
       if (repo) linkText = "pushed to " + repo.name;
+      description = $(payload.shas).last()[0][2];
       break;
 
     case "CreateEvent":
