@@ -1,9 +1,12 @@
 !!!
 %html
   %head
-    %title Quinn Shanahan (dot) com
+    %title Quinn Shanahan
     = stylesheets
     = javascripts "http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"
     = javascripts 'site'
   %body
-    #wrapper= yield
+    %a#header(href='/')
+      %h1 Quinn Shanahan (dot) com
+    #wrapper
+      = yield

@@ -6,20 +6,40 @@
 // This makes it easier to have pages without blueprint styles
 // when you're using a single/combined stylesheet.
 
+$pink: #e05
+
 body
   +blueprint-typography(true)
   +blueprint-utilities
   +blueprint-debug
   +blueprint-interaction
+  h1
+    margin-top: 1em
+  #header
+    display: block
+    overflow: hidden
+    background-color: #f5f5f5
+    text-decoration: none
+    &:hover
+      background-color: $pink
+      h1
+        color: #f5f5f5
+    h1
+      margin: -25px 0 0 -20px
+      padding: 0
+      color: #fff
+      font-size: 115px
+      width: 4000px
+      text-transform: uppercase
+      font-weight: bold
+
   #wrapper
     +container
     a
-      color: #e05
+      color: $pink
       &:hover
         color: #703
-    margin:
-      top: 80px
-      bottom: 80px
+    margin-bottom: 80px
     #experience
       .company
         margin-bottom: 1em
