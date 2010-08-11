@@ -35,7 +35,7 @@ jQuery(function ($) {
 
     if (repo) description = repo.description;
     if (this) url = this.url;
-    if (payload) url = payload.url;
+    if (!url && payload) url = payload.url;
     if (!url && payload) url = "http://github.com/" + payload.target;
 
     switch(this.type) {
