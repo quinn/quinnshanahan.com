@@ -23,8 +23,9 @@ jQuery.makeContainer = function makeContainer (name, url, renderer) {
 }
 
 jQuery(function ($) {
-  var github = "http://shoulder-pads.heroku.com/u/0818286d3b581485f846d50827614010?callback=?";
+  var github = "http://github.com/quinn.json?callback=?";
   var twitter = "http://twitter.com/status/user_timeline/dontdie.json?count=10&callback=?";
+  var tumblr  = "http://quinn.tumblr.com/api/read/json?callback=?";
 
   $.makeContainer('github', github, function (container, row) {
     var payload = this.payload;
@@ -101,5 +102,21 @@ jQuery(function ($) {
         .html(this.text)
         .end();
     return true;
+  });
+
+  $.makeContainer('tumblr', tumblr, {
+    processor: function (data) {
+      return data.posts;
+    },
+    renderer: function (container, row) {
+      row
+        .find('a')
+          .attr('href', "http://twitter.com/dontdie/status/" + this.id)
+          .end()
+        .find('.description')
+          .html(this.text)
+          .end();
+      return true;
+    }
   });
 });
