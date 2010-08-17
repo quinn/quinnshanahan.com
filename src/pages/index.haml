@@ -4,11 +4,12 @@
   %li.twitter=  link "Twitter",  "http://twitter.com/dontdie"
   %li.resume=   link "Resume"
 
-#areas
-  .toggle-links(style='display: none')
-    Some updates from:
-    %a.github(href='#github') Github
+.toggle-links
+  Some updates from:
+  -%w(github twitter flickr).each do |link|
+    %a(href="##{link}" class=link)= link.capitalize
 
+#areas
   .github
     %h2 Github Updates
     .description
@@ -28,3 +29,15 @@
     .row-template(style='display: none')
       %blockquote.description
       %a.permalink(href='' target='blank') Permalink
+
+  .flickr
+    %h2 Flickr Photos
+    .description
+      Visit my profile:
+      = link "Flickr", "http://www.flickr.com/photos/q-shan/"
+    .loading loading
+    .row-template(style='display: none')
+      .title
+      .picture
+        %img
+
