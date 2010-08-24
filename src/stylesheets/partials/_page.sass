@@ -55,14 +55,16 @@ body
         float: left
         padding: 10px
     #areas
+      +column(12, true)
+      .overflow
+        width: 10000px
+        position: relative
       .loading
         font-size: 80px
         text-transform: uppercase
         color: #ddd
-      .github
+      .area
         +column(6)
-      .twitter
-        +column(6, true)
       .row
         padding-top: 10px
         margin-top: 10px

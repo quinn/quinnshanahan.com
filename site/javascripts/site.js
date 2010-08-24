@@ -11,12 +11,22 @@ Areas.extend = jQuery.extend;
 
 Areas.extend({
   areas: {},
+  names: [],
+  focusedArea: null,
   register: function (name, area) {
     this.areas[name] = area;
+    this.names.push(name);
+    if(!this.focusedArea) this.focusedArea = name;
     return area;
   },
   display: function () {
     
+  },
+  changeFocus: function (name) {
+    var areaWidth = $('#areas .area:first').width();
+    var offset = 
+    $('#areas .overflow').animate({left: '-'+areaWidth+'px'}, 400);
+    this.focusedArea = name;
   }
 });
 
@@ -38,6 +48,7 @@ Areas.prototype = {
 
       var i = 0;
       var set = context.processor(data);
+
       $.each(set, function () {
         var row = context.template.clone()
           .appendTo(context.area)
@@ -62,8 +73,9 @@ jQuery(function ($) {
   var twitter = "http://twitter.com/status/user_timeline/dontdie.json?count=10&callback=?";
   var tumblr  = "http://quinn.tumblr.com/api/read/json?callback=?";
   var flickr  = "http://api.flickr.com/services/feeds/photos_public.gne?id=57195921@N00&format=json&jsoncallback=?";
+  var blog    = "http://blog.quinnshanahan.com/api/get_recent_posts/?callback=?";
 
-  $('#areas > .github').areas('github', github, {
+  $('.area.github').areas('github', github, {
     processor: function (data) {
       return $.map(data, function (item) {
         var payload = item.payload;
@@ -125,7 +137,7 @@ jQuery(function ($) {
     }
   });
 
-  $('#areas > .twitter').areas('twitter', twitter, function (area, row) {
+  $('.area.twitter').areas('twitter', twitter, function (area, row) {
     return row
       .find('a')
         .attr('href', "http://twitter.com/dontdie/status/" + this.id)
@@ -135,7 +147,7 @@ jQuery(function ($) {
         .end();
   });
 
-  $('#areas > .tumblr').areas('flicker', tumblr, {
+  $('.area.tumblr').areas('flicker', tumblr, {
     processor: function (data) {
       return data.posts;
     },
@@ -144,7 +156,7 @@ jQuery(function ($) {
     }
   });
 
-  $('#areas > .flickr').areas('flickr', flickr, {
+  $('.area.flickr').areas('flickr', flickr, {
     processor: function (data) {
       return $.map(data.items, function (item) {
         item.media.s = item.media.m.replace("_m.jpg", "_s.jpg");
@@ -159,5 +171,5 @@ jQuery(function ($) {
   var toggleLinks = $('.toggle-links');
   toggleLinks.find('a').click(function () { });
 
-  Areas.display();
+  Areas.changeFocus('flickr');
 });

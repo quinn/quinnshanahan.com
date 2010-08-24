@@ -7,38 +7,49 @@
 .toggle-links
   Some updates from:
   .highlight
-  -%w(github twitter flickr).each do |link|
+  -%w(github twitter flickr blog).each do |link|
     %a(href="##{link}" class=link)= link.capitalize
 
 #areas
-  .github
-    %h2 Github Updates
-    .description
-      Visit my profile:
-      = link "Github", "http://github.com/quinn"
-    .loading loading
-    .row-template(style='display: none')
-      %a.header(href='' target='blank')
-      %pre.description
+  .overflow
+    .area.github
+      %h2 Github Updates
+      .description
+        Visit my profile:
+        = link "Github", "http://github.com/quinn"
+      .loading loading
+      .row-template(style='display: none')
+        %a.header(href='' target='blank')
+        %pre.description
 
-  .twitter
-    %h2 Twitter Updates
-    .description
-      Visit my profile:
-      = link "Twitter", "http://twitter.com/dontdie"
-    .loading loading
-    .row-template(style='display: none')
-      %blockquote.description
-      %a.permalink(href='' target='blank') Permalink
+    .area.twitter
+      %h2 Twitter Updates
+      .description
+        Visit my profile:
+        = link "Twitter", "http://twitter.com/dontdie"
+      .loading loading
+      .row-template(style='display: none')
+        %blockquote.description
+        %a.permalink(href='' target='blank') Permalink
 
-  .flickr
-    %h2 Flickr Photos
-    .description
-      Visit my profile:
-      = link "Flickr", "http://www.flickr.com/photos/q-shan/"
-    .loading loading
-    .row-template(style='display: none')
-      .title
-      .picture
-        %img
+    .area.flickr
+      %h2 Flickr Photos
+      .description
+        Visit my profile:
+        = link "Flickr", "http://www.flickr.com/photos/q-shan/"
+      .loading loading
+      .row-template(style='display: none')
+        .title
+        .picture
+          %img
+
+    .area.blog
+      %h2 Blog
+      .description
+        The blog:
+        = link "Blog", "http://blog.quinnshanahan.com"
+      .loading loading
+      .row-template(style='display: none')
+        %a.title(href='')
+        .description
 
