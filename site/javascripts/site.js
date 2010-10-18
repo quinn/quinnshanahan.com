@@ -86,7 +86,7 @@ Areas.prototype.init.prototype = Areas.prototype;
 jQuery(function ($) {
   var github  = "http://github.com/quinn.json?callback=?";
   var twitter = "http://twitter.com/status/user_timeline/dontdie.json?count=10&callback=?";
-  var tumblr  = "http://quinn.tumblr.com/api/read/json?callback=?";
+  // var tumblr  = "http://quinn.tumblr.com/api/read/json?callback=?";
   var flickr  = "http://api.flickr.com/services/feeds/photos_public.gne?id=57195921@N00&format=json&jsoncallback=?";
   var blog    = "http://blog.quinnshanahan.com/api/get_recent_posts/?callback=?";
 
@@ -170,15 +170,6 @@ jQuery(function ($) {
         .end();
   });
 
-  $('.area.tumblr').areas('tumblr', tumblr, {
-    processor: function (data) {
-      return data.posts;
-    },
-    renderer: function (area, row) {
-      return true;
-    }
-  });
-
   $('.area.flickr').areas('flickr', flickr, {
     processor: function (data) {
       return $.map(data.items, function (item) {
@@ -191,6 +182,25 @@ jQuery(function ($) {
     }
   });
 
+  $('.area.blog').areas('blog', blog, {
+    processor: function (data) {
+      return $.map(data.posts, function (item) {
+        // console.log(item);
+        return item;
+      });
+    },
+    renderer: function (area, row) {
+      console.log(this);
+      return row
+        .find('a.title')
+          .attr('href', this.url)
+          .html(this.title)
+          .end()
+        .find('.description')
+          .html(this.excerpt);
+    }
+  });
+
   var toggleLinks = $('.toggle-links');
   toggleLinks.find('a').click(function (e) { 
     Areas.changeFocus($(this).attr('href').substr(1));
@@ -198,5 +208,5 @@ jQuery(function ($) {
     e.preventDefault();
   });
 
-  Areas.changeFocus('flickr');
+  Areas.changeFocus('github');
 });
