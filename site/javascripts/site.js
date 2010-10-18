@@ -190,7 +190,6 @@ jQuery(function ($) {
       });
     },
     renderer: function (area, row) {
-      console.log(this);
       return row
         .find('a.title')
           .attr('href', this.url)
@@ -204,7 +203,6 @@ jQuery(function ($) {
   var toggleLinks = $('.toggle-links');
   toggleLinks.find('a').click(function (e) { 
     Areas.changeFocus($(this).attr('href').substr(1));
-    
     e.preventDefault();
   });
 
