@@ -13,24 +13,35 @@ Areas.extend({
   areas: {},
   names: [],
   focusedArea: null,
+
   register: function (name, area) {
     this.areas[name] = area;
     this.names.push(name);
     if(!this.focusedArea) this.focusedArea = name;
     return area;
   },
-  display: function () {
-    
-  },
+
+  display: function () { },
+
   changeFocus: function (name) {
-    var areaWidth = $('#areas .area:first').width();
-    var offset = 
-    $('#areas .overflow').animate({left: '-'+areaWidth+'px'}, 400);
+    var currentArea = this.areas[name];
+    var areaWidth = currentArea.area.position().left;
+
+    $('#areas .overflow').animate({left: '-' + areaWidth + 'px'}, 400);
     this.focusedArea = name;
+
+    Areas.loadViewableAreas();
+  },
+
+  loadViewableAreas: function () {
+    _(Areas.areas).each(function (area) {
+      area.load();
+    });
   }
 });
 
 Areas.prototype = {
+  loaded: false,
   init: function (area, url, opts) {
     this.template = area.find('.row-template');
     this.renderer = opts.renderer || opts;
@@ -42,6 +53,8 @@ Areas.prototype = {
   },
   processor: function (d) { return d; },
   load: function () {
+    if (this.loaded) return true;
+
     var context = this;
     $.getJSON(this.url, function (data) {
       context.area.find('.loading').hide();
@@ -63,6 +76,8 @@ Areas.prototype = {
         if (i >= 10) return false;
       });
     });
+
+    this.loaded = true;
   }
 };
 
@@ -90,9 +105,14 @@ jQuery(function ($) {
           case "GistEvent":
             return payload.action + "d " + payload.name;
           case "PushEvent":
+            if (!repo) return true;
             return "pushed to " + repo.name;
           case "CreateEvent":
-            return "created " + repo.name;
+            if (repo) {
+              return "created " + repo.name;
+            } else {
+              return "created " + payload.name;
+            }
           case "WatchEvent":
             return payload.action + " watching " + repo.name;
           case "CommitCommentEvent":
@@ -106,13 +126,16 @@ jQuery(function ($) {
           }
         }
 
+        
         if (payload) description = payload.snippet;
         if (!description && payload.shas) description = $(payload.shas).last()[0][2];
         if (!description && repo) description = repo.description;
+        if (typeof description == "undefined") description = "";
 
         if (item) url = item.url;
         if (!url && payload) url = payload.url;
         if (!url && payload) url = "http://github.com/" + payload.target;
+        if (url == "http://github.com/undefined") url = "http://github.com/quinn";
 
         item.url = url;
         item.linkText = findLinkText(item.type);
@@ -147,7 +170,7 @@ jQuery(function ($) {
         .end();
   });
 
-  $('.area.tumblr').areas('flicker', tumblr, {
+  $('.area.tumblr').areas('tumblr', tumblr, {
     processor: function (data) {
       return data.posts;
     },
@@ -169,7 +192,11 @@ jQuery(function ($) {
   });
 
   var toggleLinks = $('.toggle-links');
-  toggleLinks.find('a').click(function () { });
+  toggleLinks.find('a').click(function (e) { 
+    Areas.changeFocus($(this).attr('href').substr(1));
+    
+    e.preventDefault();
+  });
 
   Areas.changeFocus('flickr');
 });
